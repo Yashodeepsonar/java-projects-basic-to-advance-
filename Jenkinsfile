@@ -1,21 +1,40 @@
 pipeline {
-         agent any
-         stages {
-                 stage('One') {
-                 steps {
-                     echo 'Hi, welcome to pipeline demo...'
-                 }
-                 }
-                 stage('Two') {
-                 steps {
-                    echo('Sample testing of Stage 2')
-                 }
-                 }
-                 stage('Three') {
-                
-                 steps {
-                deploy adapters: [tomcat9(credentialsId: '8fcfe447-fbef-40e3-8166-b20bbfa233fa', path: '', url: 'http://localhost:3000/')], contextPath: null, war: '**/*war'
-                 }
-                 }
-              }
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                // Add any build steps here if needed
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Download and extract Tomcat
+                sh 'wget http://mirror.nexcess.net/apache/tomcat/tomcat-9/v9.0.61/bin/apache-tomcat-9.0.61.tar.gz'
+                sh 'tar -xvf apache-tomcat-9.0.61.tar.gz'
+
+                // Start Tomcat server
+                sh './apache-tomcat-9.0.61/bin/startup.sh'
+
+                // Add any other deployment steps here
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Add any testing steps here
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                // Stop Tomcat server
+                sh './apache-tomcat-9.0.61/bin/shutdown.sh'
+
+                // Clean up extracted files
+                sh 'rm -rf apache-tomcat-9.0.61 apache-tomcat-9.0.61.tar.gz'
+            }
+        }
+    }
 }
