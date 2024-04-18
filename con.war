@@ -1,21 +1,3 @@
-pipeline {
-         agent any
-         stages {
-                 stage('One') {
-                 steps {
-                     echo 'Hi, welcome to pipeline demo...'
-                 }
-                 }
-                 stage('Two') {
-                 steps {
-                    echo('Sample testing of Stage 2')
-                 }
-                 }
-                 stage('Three') {
-                
-                 steps {
-                       echo 'Thanks for using Jenkins Pipeline'
-                 }
-                 }
-              }
-}
+<html>
+<h1>Hello world from tomcat server</h1>
+</html>
